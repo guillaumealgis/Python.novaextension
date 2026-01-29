@@ -136,13 +136,13 @@
     "issueMatchers": {
         "ruff": {
             "pattern": {
-                "regexp": "^::(\\w+)\\stitle=.+,file=.+,line=(\\d+),col=(\\d+),endLine=(\\d+),endColumn=(\\d+)::.+:\\d+:\\s(\\w+)\\s(.*)",
-                "message": 7,
-                "code": 6,
+                "regexp": "^::(\\w+)\\stitle=.+,file=.+,line=(\\d+)(,col=(\\d+))?,endLine=(\\d+)(,endColumn=(\\d+))?::.+:\\d+:\\s(\\w+)\\s(.*)",
+                "message": 9,
                 "line": 2,
-                "column": 3,
-                "endLine": 4,
-                "endColumn": 5,
+                "column": 4,
+                "endLine": 5,
+                "endColumn": 7,
+                "code": 8,
                 "severity": 1
             }
         }
