@@ -3,7 +3,7 @@
     "name": "Python",
     "organization": "Dan Watson",
     "description": "Batteries-included Python support for Nova.",
-    "version": "1.6.1",
+    "version": "1.7.0",
     "categories": [
         "commands",
         "languages",
@@ -279,7 +279,61 @@
                 {
                     "key": "workdir",
                     "title": "Working Directory",
-                    "description": "The working directory in which to invoke the script. By default, the project folder is used.",
+                    "description": "The working directory in which to invoke the script or module. By default, the project folder is used.",
+                    "type": "path",
+                    "placeholder": "Project Root",
+                    "allowFiles": false,
+                    "allowFolders": true,
+                    "relative": true
+                }
+            ]
+        },
+        "uvRun": {
+            "name": "uv run",
+            "description": "Run scripts or Python modules using uv.",
+            "image": "python-nova",
+            "tasks": {
+                "run": {
+                    "resolve": "net.danwatson.Python",
+                    "data": { "name": "uvRun" }
+                }
+            },
+            "config": [
+                {
+                    "key": "script",
+                    "title": "Script",
+                    "type": "path",
+                    "relative": true,
+                    "description": "The path to a script to run using uv. This option is mutually exclusive with \"Module\". If both are specified, the script will be preferred."
+                },
+                {
+                    "key": "module",
+                    "title": "Module",
+                    "type": "string",
+                    "description": "The name of a Python module to executing using uv. This option is mutually exclusive with \"Script\". If both are specified, the script will be preferred."
+                },
+                {
+                    "key": "runArgs",
+                    "title": "Run Arguments",
+                    "description": "Custom arguments to pass to uv run.",
+                    "type": "stringArray"
+                },
+                {
+                    "key": "scriptArgs",
+                    "title": "Script Arguments",
+                    "description": "Custom arguments to pass to the script or module.",
+                    "type": "stringArray"
+                },
+                {
+                    "key": "env",
+                    "title": "Environment",
+                    "description": "Custom environment variables to set when executing the target.",
+                    "type": "stringArray"
+                },
+                {
+                    "key": "workdir",
+                    "title": "Working Directory",
+                    "description": "The working directory in which to invoke the script or module. By default, the project folder is used.",
                     "type": "path",
                     "placeholder": "Project Root",
                     "allowFiles": false,

@@ -1,3 +1,8 @@
+## Version 1.7.0 - TBD
+
+* New task for running scripts or modules with `uv`
+
+
 ## Version 1.6.1 - 2026.01.13
 
 * Expand `~` in executable paths (#19)
