@@ -133,21 +133,6 @@
         ]
     },
 
-    "issueMatchers": {
-        "ruff": {
-            "pattern": {
-                "regexp": "^::(\\w+)\\stitle=.+,file=.+,line=(\\d+),col=(\\d+),endLine=(\\d+),endColumn=(\\d+)::.+:\\d+:\\s(\\w+)\\s(.*)",
-                "message": 7,
-                "code": 6,
-                "line": 2,
-                "column": 3,
-                "endLine": 4,
-                "endColumn": 5,
-                "severity": 1
-            }
-        }
-    },
-
     "sidebars": [
         {
             "id": "python.packages",

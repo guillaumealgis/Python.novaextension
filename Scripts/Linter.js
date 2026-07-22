@@ -67,7 +67,7 @@ class Linter {
         } else if (action == LinterAction.Organize) {
             finalArgs.push("--select", "I", "--fix");
         } else {
-            finalArgs.push("--output-format", "github");
+            finalArgs.push("--output-format", "json");
         }
         if (filename) {
             finalArgs.push("--stdin-filename", filename);
@@ -97,13 +97,38 @@ class Linter {
 
         return this.run(content, LinterAction.Check, null, editor.document.path).then(
             (result) => {
-                const parser = new IssueParser("ruff");
-                for (const line of result.stdout) {
-                    parser.pushLine(line);
+                const stdout = result.stdout.join('\n')
+                const ruffIssues = JSON.parse(stdout);
+                let issues = [];
+                for (const ruffIssue of ruffIssues) {
+                    const issue = this.convertRuffIssueToNovaIssue(ruffIssue)
+                    issues.push(issue);
                 }
-                return parser.issues;
+                return issues;
             }
         );
+    }
+
+    convertRuffIssueToNovaIssue(ruffIssue) {
+        let issue = new Issue();
+        issue.message = ruffIssue.message;
+        issue.code = ruffIssue.code;
+        // https://github.com/astral-sh/ruff/blob/main/crates/ruff_db/src/diagnostic/mod.rs#L1317
+        switch (ruffIssue.severity) {
+            case "info":
+                issue.severity = IssueSeverity.Info;
+            case "error":
+            case "fatal":
+                issue.severity = IssueSeverity.Error;
+            default:
+                issue.severity = IssueSeverity.Warning;
+        }
+        issue.source = "ruff";
+        issue.line = ruffIssue.location.row;
+        issue.column = ruffIssue.location.column;
+        issue.endLine = ruffIssue.end_location.row;
+        issue.endColumn = ruffIssue.end_location.column;
+        return issue;
     }
 
     fix(editor, action = LinterAction.Fix) {
